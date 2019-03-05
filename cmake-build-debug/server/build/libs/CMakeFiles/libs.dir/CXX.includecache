@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/lexolordan/webserver/server/libs/connection/connection.cpp
+connection.h
+/Users/lexolordan/webserver/server/libs/connection/connection.h
+
+/Users/lexolordan/webserver/server/libs/connection/connection.h
+

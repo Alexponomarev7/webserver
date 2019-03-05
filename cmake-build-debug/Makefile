@@ -120,8 +120,116 @@ main: cmake_check_build_system
 
 # fast build rule for target.
 main/fast:
-	$(MAKE) -f server/daemons/CMakeFiles/main.dir/build.make server/daemons/CMakeFiles/main.dir/build
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
+
+server/daemons/main.o: server/daemons/main.cpp.o
+
+.PHONY : server/daemons/main.o
+
+# target to build an object file
+server/daemons/main.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/daemons/main.cpp.o
+.PHONY : server/daemons/main.cpp.o
+
+server/daemons/main.i: server/daemons/main.cpp.i
+
+.PHONY : server/daemons/main.i
+
+# target to preprocess a source file
+server/daemons/main.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/daemons/main.cpp.i
+.PHONY : server/daemons/main.cpp.i
+
+server/daemons/main.s: server/daemons/main.cpp.s
+
+.PHONY : server/daemons/main.s
+
+# target to generate assembly for a file
+server/daemons/main.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/daemons/main.cpp.s
+.PHONY : server/daemons/main.cpp.s
+
+server/libs/connection/connection.o: server/libs/connection/connection.cpp.o
+
+.PHONY : server/libs/connection/connection.o
+
+# target to build an object file
+server/libs/connection/connection.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/libs/connection/connection.cpp.o
+.PHONY : server/libs/connection/connection.cpp.o
+
+server/libs/connection/connection.i: server/libs/connection/connection.cpp.i
+
+.PHONY : server/libs/connection/connection.i
+
+# target to preprocess a source file
+server/libs/connection/connection.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/libs/connection/connection.cpp.i
+.PHONY : server/libs/connection/connection.cpp.i
+
+server/libs/connection/connection.s: server/libs/connection/connection.cpp.s
+
+.PHONY : server/libs/connection/connection.s
+
+# target to generate assembly for a file
+server/libs/connection/connection.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/libs/connection/connection.cpp.s
+.PHONY : server/libs/connection/connection.cpp.s
+
+utils/logger/logger.o: utils/logger/logger.cpp.o
+
+.PHONY : utils/logger/logger.o
+
+# target to build an object file
+utils/logger/logger.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/utils/logger/logger.cpp.o
+.PHONY : utils/logger/logger.cpp.o
+
+utils/logger/logger.i: utils/logger/logger.cpp.i
+
+.PHONY : utils/logger/logger.i
+
+# target to preprocess a source file
+utils/logger/logger.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/utils/logger/logger.cpp.i
+.PHONY : utils/logger/logger.cpp.i
+
+utils/logger/logger.s: utils/logger/logger.cpp.s
+
+.PHONY : utils/logger/logger.s
+
+# target to generate assembly for a file
+utils/logger/logger.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/utils/logger/logger.cpp.s
+.PHONY : utils/logger/logger.cpp.s
+
+utils/string/string.o: utils/string/string.cpp.o
+
+.PHONY : utils/string/string.o
+
+# target to build an object file
+utils/string/string.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/utils/string/string.cpp.o
+.PHONY : utils/string/string.cpp.o
+
+utils/string/string.i: utils/string/string.cpp.i
+
+.PHONY : utils/string/string.i
+
+# target to preprocess a source file
+utils/string/string.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/utils/string/string.cpp.i
+.PHONY : utils/string/string.cpp.i
+
+utils/string/string.s: utils/string/string.cpp.s
+
+.PHONY : utils/string/string.s
+
+# target to generate assembly for a file
+utils/string/string.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/utils/string/string.cpp.s
+.PHONY : utils/string/string.cpp.s
 
 # Help Target
 help:
@@ -132,6 +240,18 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... main"
+	@echo "... server/daemons/main.o"
+	@echo "... server/daemons/main.i"
+	@echo "... server/daemons/main.s"
+	@echo "... server/libs/connection/connection.o"
+	@echo "... server/libs/connection/connection.i"
+	@echo "... server/libs/connection/connection.s"
+	@echo "... utils/logger/logger.o"
+	@echo "... utils/logger/logger.i"
+	@echo "... utils/logger/logger.s"
+	@echo "... utils/string/string.o"
+	@echo "... utils/string/string.i"
+	@echo "... utils/string/string.s"
 .PHONY : help
 
 

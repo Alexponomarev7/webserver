@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc liblibs.a  CMakeFiles/libs.dir/connection/connection.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib liblibs.a

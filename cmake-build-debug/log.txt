@@ -1,0 +1,6 @@
+Create connection.
+Ready to attempt queries.
+Binded
+05-03-2019 13:20:56: Create connection.
+05-03-2019 13:20:56: Ready to attempt queries.
+05-03-2019 13:20:56: Binded.

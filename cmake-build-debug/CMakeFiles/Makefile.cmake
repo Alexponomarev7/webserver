@@ -35,8 +35,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.12.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.12.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.12.3/CMakeSystem.cmake"
-  "../server/CMakeLists.txt"
-  "../server/daemons/CMakeLists.txt"
   )
 
 # The corresponding makefile is:
@@ -48,11 +46,9 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
-  "server/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "server/daemons/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "server/daemons/CMakeFiles/main.dir/DependInfo.cmake"
+  "CMakeFiles/main.dir/DependInfo.cmake"
   )

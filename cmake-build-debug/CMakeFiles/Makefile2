@@ -65,75 +65,39 @@ CMAKE_SOURCE_DIR = /Users/lexolordan/webserver
 CMAKE_BINARY_DIR = /Users/lexolordan/webserver/cmake-build-debug
 
 #=============================================================================
-# Directory level rules for directory server
-
-# Convenience name for "all" pass in the directory.
-server/all: server/daemons/all
-
-.PHONY : server/all
-
-# Convenience name for "clean" pass in the directory.
-server/clean: server/daemons/clean
-
-.PHONY : server/clean
-
-# Convenience name for "preinstall" pass in the directory.
-server/preinstall: server/daemons/preinstall
-
-.PHONY : server/preinstall
-
-#=============================================================================
-# Directory level rules for directory server/daemons
-
-# Convenience name for "all" pass in the directory.
-server/daemons/all: server/daemons/CMakeFiles/main.dir/all
-
-.PHONY : server/daemons/all
-
-# Convenience name for "clean" pass in the directory.
-server/daemons/clean: server/daemons/CMakeFiles/main.dir/clean
-
-.PHONY : server/daemons/clean
-
-# Convenience name for "preinstall" pass in the directory.
-server/daemons/preinstall:
-
-.PHONY : server/daemons/preinstall
-
-#=============================================================================
-# Target rules for target server/daemons/CMakeFiles/main.dir
+# Target rules for target CMakeFiles/main.dir
 
 # All Build rule for target.
-server/daemons/CMakeFiles/main.dir/all:
-	$(MAKE) -f server/daemons/CMakeFiles/main.dir/build.make server/daemons/CMakeFiles/main.dir/depend
-	$(MAKE) -f server/daemons/CMakeFiles/main.dir/build.make server/daemons/CMakeFiles/main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target main"
-.PHONY : server/daemons/CMakeFiles/main.dir/all
+CMakeFiles/main.dir/all:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/depend
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5 "Built target main"
+.PHONY : CMakeFiles/main.dir/all
 
 # Include target in all.
-all: server/daemons/CMakeFiles/main.dir/all
+all: CMakeFiles/main.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-server/daemons/CMakeFiles/main.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lexolordan/webserver/cmake-build-debug/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 server/daemons/CMakeFiles/main.dir/all
+CMakeFiles/main.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lexolordan/webserver/cmake-build-debug/CMakeFiles 5
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/main.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lexolordan/webserver/cmake-build-debug/CMakeFiles 0
-.PHONY : server/daemons/CMakeFiles/main.dir/rule
+.PHONY : CMakeFiles/main.dir/rule
 
 # Convenience name for target.
-main: server/daemons/CMakeFiles/main.dir/rule
+main: CMakeFiles/main.dir/rule
 
 .PHONY : main
 
 # clean rule for target.
-server/daemons/CMakeFiles/main.dir/clean:
-	$(MAKE) -f server/daemons/CMakeFiles/main.dir/build.make server/daemons/CMakeFiles/main.dir/clean
-.PHONY : server/daemons/CMakeFiles/main.dir/clean
+CMakeFiles/main.dir/clean:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/clean
+.PHONY : CMakeFiles/main.dir/clean
 
 # clean rule for target.
-clean: server/daemons/CMakeFiles/main.dir/clean
+clean: CMakeFiles/main.dir/clean
 
 .PHONY : clean
 
