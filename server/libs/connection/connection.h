@@ -19,6 +19,8 @@
 
 #include <utils/logger/logger.h>
 #include <utils/string/string.h>
+#include <server/libs/connection/types.h>
+#include <server/libs/connection/testlib.h>
 
 class Connection {
 public:

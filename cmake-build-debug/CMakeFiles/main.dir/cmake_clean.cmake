@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.dir/server/daemons/main.cpp.o"
   "CMakeFiles/main.dir/server/libs/connection/connection.cpp.o"
+  "CMakeFiles/main.dir/server/libs/connection/testlib.cpp.o"
+  "CMakeFiles/main.dir/server/libs/connection/types.cpp.o"
   "CMakeFiles/main.dir/utils/logger/logger.cpp.o"
   "CMakeFiles/main.dir/utils/string/string.cpp.o"
   "main.pdb"

@@ -93,6 +93,18 @@
 		<Unit filename="/Users/lexolordan/webserver/server/libs/connection/connection.h">
 			<Option target="main"/>
 		</Unit>
+		<Unit filename="/Users/lexolordan/webserver/server/libs/connection/testlib.cpp">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/Users/lexolordan/webserver/server/libs/connection/testlib.h">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/Users/lexolordan/webserver/server/libs/connection/types.cpp">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/Users/lexolordan/webserver/server/libs/connection/types.h">
+			<Option target="main"/>
+		</Unit>
 		<Unit filename="/Users/lexolordan/webserver/utils/logger/logger.cpp">
 			<Option target="main"/>
 		</Unit>

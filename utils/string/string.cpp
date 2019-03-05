@@ -4,12 +4,12 @@
 
 #include "string.h"
 
-StringBuilder StringBuilder::operator<<(int obj) {
+StringBuilder& StringBuilder::operator<<(int obj) {
     buffer_ += std::to_string(obj);
     return *this;
 }
 
-StringBuilder StringBuilder::operator<<(std::string obj) {
+StringBuilder& StringBuilder::operator<<(std::string obj) {
     buffer_ += obj;
     return *this;
 }

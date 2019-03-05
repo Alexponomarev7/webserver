@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(LIBRARY
         server/libs/connection/connection.cpp
+        #server/libs/connection/storage.cpp
+        server/libs/connection/testlib.cpp
+        server/libs/connection/types.cpp
         )
 
 set(UTILS

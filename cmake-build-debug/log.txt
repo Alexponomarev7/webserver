@@ -4,3 +4,124 @@ Binded
 05-03-2019 13:20:56: Create connection.
 05-03-2019 13:20:56: Ready to attempt queries.
 05-03-2019 13:20:56: Binded.
+05-03-2019 14:48:35: Create connection.
+05-03-2019 14:48:35: Ready to attempt queries.
+05-03-2019 14:48:35: Binded.
+05-03-2019 14:48:40: Got connection
+05-03-2019 14:49:24: Got connection
+05-03-2019 14:49:24: Got connection
+05-03-2019 14:49:25: Got connection
+05-03-2019 14:50:20: Create connection.
+05-03-2019 14:50:20: Ready to attempt queries.
+05-03-2019 14:50:20: Binded.
+05-03-2019 14:50:27: Got connection
+05-03-2019 14:50:27: HTTP/1.1Content-Type10<doctype !html>
+    <html>
+        <head>
+            <title>Bye-bye baby bye-bye</title>
+            <style>body { background-color: #111 }
+                   h1 { font-size:4cm; text-align: center; color: black;
+                        text-shadow: 0 0 2mm red}
+            </style>
+        </head>
+<body>
+        <h1>Goodbye, world!</h1>
+</body>
+</html>
+
+05-03-2019 14:54:47: Create connection.
+05-03-2019 14:54:47: Ready to attempt queries.
+05-03-2019 14:54:47: Binded on 8080 port.
+05-03-2019 14:55:38: Create connection.
+05-03-2019 14:55:38: Ready to attempt queries.
+05-03-2019 14:55:38: Binded on 8080 port.
+05-03-2019 14:55:45: Got connection
+05-03-2019 14:55:45: HTTP/1.1Content-Type10<doctype !html>
+    <html>
+        <head>
+            <title>Bye-bye baby bye-bye</title>
+            <style>body { background-color: #111 }
+                   h1 { font-size:4cm; text-align: center; color: black;
+                        text-shadow: 0 0 2mm red}
+            </style>
+        </head>
+<body>
+        <h1>Goodbye, world!</h1>
+</body>
+</html>
+
+05-03-2019 14:56:15: Create connection.
+05-03-2019 14:56:15: Ready to attempt queries.
+05-03-2019 14:56:15: Binded on 8080 port.
+05-03-2019 14:56:19: Got connection
+05-03-2019 14:56:19: HTTP/1.1Content-Type10<doctype !html>
+    <html>
+        <head>
+            <title>Bye-bye baby bye-bye</title>
+            <style>body { background-color: #111 }
+                   h1 { font-size:4cm; text-align: center; color: black;
+                        text-shadow: 0 0 2mm red}
+            </style>
+        </head>
+<body>
+        <h1>Goodbye, world!</h1>
+</body>
+</html>
+
+05-03-2019 14:57:39: Create connection.
+05-03-2019 14:57:39: Ready to attempt queries.
+05-03-2019 14:57:39: Binded on 8080 port.
+05-03-2019 14:57:49: Got connection
+05-03-2019 14:57:49: HTTP/1.143r34 200 OK10Content-Type: text/html; charset=UTF-81010<doctype !html>
+    <html>
+        <head>
+            <title>Bye-bye baby bye-bye</title>
+            <style>body { background-color: #111 }
+                   h1 { font-size:4cm; text-align: center; color: black;
+                        text-shadow: 0 0 2mm red}
+            </style>
+        </head>
+<body>
+        <h1>Goodbye, world!</h1>
+</body>
+</html>
+
+05-03-2019 14:58:14: Create connection.
+05-03-2019 14:58:14: Ready to attempt queries.
+05-03-2019 14:58:14: Binded on 8080 port.
+05-03-2019 14:58:20: Got connection
+05-03-2019 14:58:20: HTTP/1.1 200 OK10Content-Type: text/html; charset=UTF-81010<doctype !html>
+    <html>
+        <head>
+            <title>Bye-bye baby bye-bye</title>
+            <style>body { background-color: #111 }
+                   h1 { font-size:4cm; text-align: center; color: black;
+                        text-shadow: 0 0 2mm red}
+            </style>
+        </head>
+<body>
+        <h1>Goodbye, world!</h1>
+</body>
+</html>
+
+05-03-2019 14:58:59: Create connection.
+05-03-2019 14:58:59: Ready to attempt queries.
+05-03-2019 14:58:59: Binded on 8080 port.
+05-03-2019 14:59:02: Got connection
+05-03-2019 14:59:02: HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+
+<doctype !html>
+    <html>
+        <head>
+            <title>Bye-bye baby bye-bye</title>
+            <style>body { background-color: #111 }
+                   h1 { font-size:4cm; text-align: center; color: black;
+                        text-shadow: 0 0 2mm red}
+            </style>
+        </head>
+<body>
+        <h1>Goodbye, world!</h1>
+</body>
+</html>
+

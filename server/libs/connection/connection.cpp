@@ -37,27 +37,10 @@ void Connection::BindPort(int port) {
     }
 
     listen(socket_, 5);
-    logger_.Log("Binded.");
+    logger_.Log((StringBuilder() << "Binded on " << port << " port.").Get());
 }
 
 void Connection::Handle() {
-    const char* response =
-            "HTTP/1.1 200 OK\r\n"
-            "Content-Type: text/html; charset=UTF-8\r\n\r\n"
-            "<doctype !html>\n"
-            "    <html>\n"
-            "        <head>\n"
-            "            <title>Bye-bye baby bye-bye</title>\n"
-            "            <style>body { background-color: #111 }\n"
-            "                   h1 { font-size:4cm; text-align: center; color: black;\n"
-            "                        text-shadow: 0 0 2mm red}\n"
-            "            </style>\n"
-            "        </head>\n"
-            "<body>\n"
-            "        <h1>Goodbye, !</h1>\n"
-            "</body>\n"
-            "</html>\r\n";
-
     struct sockaddr_in cli_addr;
     int client_fd;
     socklen_t sin_len = sizeof(cli_addr);
@@ -66,13 +49,16 @@ void Connection::Handle() {
         client_fd = accept(socket_,
                            (struct sockaddr *) &cli_addr,
                            &sin_len);
-        printf("got connection\n");
+        logger_.Log("Got connection");
 
         if (client_fd == -1) {
-            perror("Can't accept");
+            logger_.Log("Can't accept");
             continue;
         }
 
+        std::string response_string = SimpleResponse().GetStr();
+        logger_.Log(response_string);
+        const char * response = response_string.c_str();
         ssize_t total_cnt = 0, now_cnt;
         while (total_cnt != strlen(response)) {
             now_cnt = write(client_fd, response + total_cnt, strlen(response) - total_cnt);

@@ -83,9 +83,35 @@ CMakeFiles/main.dir/server/libs/connection/connection.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/server/libs/connection/connection.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/lexolordan/webserver/server/libs/connection/connection.cpp -o CMakeFiles/main.dir/server/libs/connection/connection.cpp.s
 
+CMakeFiles/main.dir/server/libs/connection/testlib.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/server/libs/connection/testlib.cpp.o: ../server/libs/connection/testlib.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/server/libs/connection/testlib.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/server/libs/connection/testlib.cpp.o -c /Users/lexolordan/webserver/server/libs/connection/testlib.cpp
+
+CMakeFiles/main.dir/server/libs/connection/testlib.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/server/libs/connection/testlib.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/lexolordan/webserver/server/libs/connection/testlib.cpp > CMakeFiles/main.dir/server/libs/connection/testlib.cpp.i
+
+CMakeFiles/main.dir/server/libs/connection/testlib.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/server/libs/connection/testlib.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/lexolordan/webserver/server/libs/connection/testlib.cpp -o CMakeFiles/main.dir/server/libs/connection/testlib.cpp.s
+
+CMakeFiles/main.dir/server/libs/connection/types.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/server/libs/connection/types.cpp.o: ../server/libs/connection/types.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/server/libs/connection/types.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/server/libs/connection/types.cpp.o -c /Users/lexolordan/webserver/server/libs/connection/types.cpp
+
+CMakeFiles/main.dir/server/libs/connection/types.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/server/libs/connection/types.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/lexolordan/webserver/server/libs/connection/types.cpp > CMakeFiles/main.dir/server/libs/connection/types.cpp.i
+
+CMakeFiles/main.dir/server/libs/connection/types.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/server/libs/connection/types.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/lexolordan/webserver/server/libs/connection/types.cpp -o CMakeFiles/main.dir/server/libs/connection/types.cpp.s
+
 CMakeFiles/main.dir/utils/logger/logger.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/utils/logger/logger.cpp.o: ../utils/logger/logger.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/utils/logger/logger.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/utils/logger/logger.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/utils/logger/logger.cpp.o -c /Users/lexolordan/webserver/utils/logger/logger.cpp
 
 CMakeFiles/main.dir/utils/logger/logger.cpp.i: cmake_force
@@ -98,7 +124,7 @@ CMakeFiles/main.dir/utils/logger/logger.cpp.s: cmake_force
 
 CMakeFiles/main.dir/utils/string/string.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/utils/string/string.cpp.o: ../utils/string/string.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/utils/string/string.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/utils/string/string.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/utils/string/string.cpp.o -c /Users/lexolordan/webserver/utils/string/string.cpp
 
 CMakeFiles/main.dir/utils/string/string.cpp.i: cmake_force
@@ -113,6 +139,8 @@ CMakeFiles/main.dir/utils/string/string.cpp.s: cmake_force
 main_OBJECTS = \
 "CMakeFiles/main.dir/server/daemons/main.cpp.o" \
 "CMakeFiles/main.dir/server/libs/connection/connection.cpp.o" \
+"CMakeFiles/main.dir/server/libs/connection/testlib.cpp.o" \
+"CMakeFiles/main.dir/server/libs/connection/types.cpp.o" \
 "CMakeFiles/main.dir/utils/logger/logger.cpp.o" \
 "CMakeFiles/main.dir/utils/string/string.cpp.o"
 
@@ -121,11 +149,13 @@ main_EXTERNAL_OBJECTS =
 
 main: CMakeFiles/main.dir/server/daemons/main.cpp.o
 main: CMakeFiles/main.dir/server/libs/connection/connection.cpp.o
+main: CMakeFiles/main.dir/server/libs/connection/testlib.cpp.o
+main: CMakeFiles/main.dir/server/libs/connection/types.cpp.o
 main: CMakeFiles/main.dir/utils/logger/logger.cpp.o
 main: CMakeFiles/main.dir/utils/string/string.cpp.o
 main: CMakeFiles/main.dir/build.make
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

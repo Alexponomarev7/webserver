@@ -177,6 +177,60 @@ server/libs/connection/connection.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/libs/connection/connection.cpp.s
 .PHONY : server/libs/connection/connection.cpp.s
 
+server/libs/connection/testlib.o: server/libs/connection/testlib.cpp.o
+
+.PHONY : server/libs/connection/testlib.o
+
+# target to build an object file
+server/libs/connection/testlib.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/libs/connection/testlib.cpp.o
+.PHONY : server/libs/connection/testlib.cpp.o
+
+server/libs/connection/testlib.i: server/libs/connection/testlib.cpp.i
+
+.PHONY : server/libs/connection/testlib.i
+
+# target to preprocess a source file
+server/libs/connection/testlib.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/libs/connection/testlib.cpp.i
+.PHONY : server/libs/connection/testlib.cpp.i
+
+server/libs/connection/testlib.s: server/libs/connection/testlib.cpp.s
+
+.PHONY : server/libs/connection/testlib.s
+
+# target to generate assembly for a file
+server/libs/connection/testlib.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/libs/connection/testlib.cpp.s
+.PHONY : server/libs/connection/testlib.cpp.s
+
+server/libs/connection/types.o: server/libs/connection/types.cpp.o
+
+.PHONY : server/libs/connection/types.o
+
+# target to build an object file
+server/libs/connection/types.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/libs/connection/types.cpp.o
+.PHONY : server/libs/connection/types.cpp.o
+
+server/libs/connection/types.i: server/libs/connection/types.cpp.i
+
+.PHONY : server/libs/connection/types.i
+
+# target to preprocess a source file
+server/libs/connection/types.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/libs/connection/types.cpp.i
+.PHONY : server/libs/connection/types.cpp.i
+
+server/libs/connection/types.s: server/libs/connection/types.cpp.s
+
+.PHONY : server/libs/connection/types.s
+
+# target to generate assembly for a file
+server/libs/connection/types.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/server/libs/connection/types.cpp.s
+.PHONY : server/libs/connection/types.cpp.s
+
 utils/logger/logger.o: utils/logger/logger.cpp.o
 
 .PHONY : utils/logger/logger.o
@@ -246,6 +300,12 @@ help:
 	@echo "... server/libs/connection/connection.o"
 	@echo "... server/libs/connection/connection.i"
 	@echo "... server/libs/connection/connection.s"
+	@echo "... server/libs/connection/testlib.o"
+	@echo "... server/libs/connection/testlib.i"
+	@echo "... server/libs/connection/testlib.s"
+	@echo "... server/libs/connection/types.o"
+	@echo "... server/libs/connection/types.i"
+	@echo "... server/libs/connection/types.s"
 	@echo "... utils/logger/logger.o"
 	@echo "... utils/logger/logger.i"
 	@echo "... utils/logger/logger.s"

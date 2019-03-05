@@ -11,8 +11,8 @@ class StringBuilder {
 public:
     StringBuilder() = default;
 
-    StringBuilder operator<<(int obj);
-    StringBuilder operator<<(std::string obj);
+    StringBuilder& operator<<(int obj);
+    StringBuilder& operator<<(std::string obj);
 
     std::string Get() const;
 

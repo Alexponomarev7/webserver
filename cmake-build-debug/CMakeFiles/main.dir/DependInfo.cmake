@@ -6,6 +6,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/lexolordan/webserver/server/daemons/main.cpp" "/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles/main.dir/server/daemons/main.cpp.o"
   "/Users/lexolordan/webserver/server/libs/connection/connection.cpp" "/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles/main.dir/server/libs/connection/connection.cpp.o"
+  "/Users/lexolordan/webserver/server/libs/connection/testlib.cpp" "/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles/main.dir/server/libs/connection/testlib.cpp.o"
+  "/Users/lexolordan/webserver/server/libs/connection/types.cpp" "/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles/main.dir/server/libs/connection/types.cpp.o"
   "/Users/lexolordan/webserver/utils/logger/logger.cpp" "/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles/main.dir/utils/logger/logger.cpp.o"
   "/Users/lexolordan/webserver/utils/string/string.cpp" "/Users/lexolordan/webserver/cmake-build-debug/CMakeFiles/main.dir/utils/string/string.cpp.o"
   )

@@ -3,14 +3,27 @@
 
 CMakeFiles/main.dir/server/daemons/main.cpp.o
  .././server/libs/connection/connection.h
+ .././server/libs/connection/testlib.h
+ .././server/libs/connection/types.h
  .././utils/logger/logger.h
  .././utils/string/string.h
  /Users/lexolordan/webserver/server/daemons/main.cpp
 CMakeFiles/main.dir/server/libs/connection/connection.cpp.o
+ .././server/libs/connection/testlib.h
+ .././server/libs/connection/types.h
  .././utils/logger/logger.h
  .././utils/string/string.h
  /Users/lexolordan/webserver/server/libs/connection/connection.cpp
  /Users/lexolordan/webserver/server/libs/connection/connection.h
+CMakeFiles/main.dir/server/libs/connection/testlib.cpp.o
+ .././server/libs/connection/types.h
+ .././utils/string/string.h
+ /Users/lexolordan/webserver/server/libs/connection/testlib.cpp
+ /Users/lexolordan/webserver/server/libs/connection/testlib.h
+CMakeFiles/main.dir/server/libs/connection/types.cpp.o
+ .././utils/string/string.h
+ /Users/lexolordan/webserver/server/libs/connection/types.cpp
+ /Users/lexolordan/webserver/server/libs/connection/types.h
 CMakeFiles/main.dir/utils/logger/logger.cpp.o
  /Users/lexolordan/webserver/utils/logger/logger.cpp
  /Users/lexolordan/webserver/utils/logger/logger.h
