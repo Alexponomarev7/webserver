@@ -39,4 +39,14 @@ private:
     std::string body_;
 };
 
+
+class Config {
+public:
+    Config() = default;
+
+    static Config LoadConfig();
+
+    ~Config() = default;
+};
+
 #endif //WEB_SERVER_TYPES_H

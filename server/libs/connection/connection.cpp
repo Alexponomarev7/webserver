@@ -4,7 +4,7 @@
 
 #include "connection.h"
 
-Connection::Connection() {
+Connection::Connection(int port) {
     logger_ = Logger();
     socket_ = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -20,9 +20,6 @@ Connection::Connection() {
     logger_.Log("Create connection.");
     logger_.Log("Ready to attempt queries.");
 
-}
-
-void Connection::BindPort(int port) {
     struct sockaddr_in server_address;
 
     server_address.sin_family = AF_INET;
@@ -45,19 +42,23 @@ void Connection::Handle() {
     int client_fd;
     socklen_t sin_len = sizeof(cli_addr);
 
+    pid_t pid = fork();
+    if (pid != 0) {
+        return;
+    }
+
     while (true) {
         client_fd = accept(socket_,
                            (struct sockaddr *) &cli_addr,
                            &sin_len);
-        logger_.Log("Got connection");
+        logger_.Log("Got connection.");
 
         if (client_fd == -1) {
-            logger_.Log("Can't accept");
+            logger_.Log("Can't accept.");
             continue;
         }
 
         std::string response_string = SimpleResponse().GetStr();
-        logger_.Log(response_string);
         const char * response = response_string.c_str();
         ssize_t total_cnt = 0, now_cnt;
         while (total_cnt != strlen(response)) {

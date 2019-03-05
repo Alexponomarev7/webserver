@@ -4,6 +4,7 @@
 
 #include "types.h"
 
+// implements Response
 void Response::SetVersion(std::string obj) {
     version_ = obj;
 }
@@ -56,4 +57,9 @@ std::string Response::GetStr() const {
     builder << "\n";
     builder << GetBody();
     return builder.Get();
+}
+
+// implements Config
+Config Config::LoadConfig() {
+    return Config();
 }

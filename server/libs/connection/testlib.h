@@ -5,7 +5,7 @@
 #ifndef WEB_SERVER_TESTLIB_H
 #define WEB_SERVER_TESTLIB_H
 
-#include <server/libs/connection/types.h>
+#include <server/libs/common/types.h>
 
 Response SimpleResponse();
 

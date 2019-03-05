@@ -19,14 +19,13 @@
 
 #include <utils/logger/logger.h>
 #include <utils/string/string.h>
-#include <server/libs/connection/types.h>
+#include <server/libs/common/types.h>
 #include <server/libs/connection/testlib.h>
 
 class Connection {
 public:
-    Connection();
+    Connection(int port);
 
-    void BindPort(int port);
     void Handle();
 
     ~Connection();
