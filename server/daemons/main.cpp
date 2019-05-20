@@ -1,14 +1,28 @@
 #include <server/libs/connection/connection.h>
 #include <server/libs/daemon/daemontools.h>
+#include <utils/sys/cmdparser.h>
+#include <utils/sys/helpers.h>
+#include <server/libs/daemon/config.h>
+
+#include <iostream>
 
 int main(int argc, char* argv[])
 {
-    Config cfg = Config::LoadConfig();
+    CmdParser cmd = CmdParser(argc, argv)
+      .AddOption("exec", {"start", "stop", "info"}, REQUIRED_ARG);
 
     try {
-        DaemonTools::StartDaemon();
+      if (cmd.Get("exec") == "start") {
+        Daemon::Config cfg = Daemon::Config::LoadConfig("config.cfg");
+        Daemon::DaemonTools::StartDaemon(cfg);
+      } else if (cmd.Get("exec") == "stop") {
+        Daemon::DaemonTools::StopDaemon();
+      } else if (cmd.Get("exec") == "info") {
+        UNREACHABLE();
+      }
     } catch (const std::exception &ex) {
-        std::cerr << ex.what() << std::endl;
+      std::cerr << ex.what() << std::endl;
     }
+
     return 0;
 };

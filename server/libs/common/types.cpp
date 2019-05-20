@@ -58,8 +58,3 @@ std::string Response::GetStr() const {
     builder << GetBody();
     return builder.Get();
 }
-
-// implements Config
-Config Config::LoadConfig() {
-    return Config();
-}

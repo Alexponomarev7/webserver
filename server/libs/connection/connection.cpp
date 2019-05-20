@@ -2,39 +2,39 @@
 // Created by Alexey A. Ponomarev on 05.03.19.
 //
 
+#include <server/libs/daemon/daemontools.h>
 #include "connection.h"
 
 Connection::Connection(int port) {
-    logger_ = Logger();
     socket_ = socket(AF_INET, SOCK_STREAM, 0);
 
     if (socket_ < 0) {
-        std::string status = "Can't open socket.";
-        logger_.Log(status);
-        throw status;
+        std::string status = "[SERVER] Can't open socket.";
+        Logger::Log(status, SERVER);
+        throw std::runtime_error(status);
     }
 
     int one = 1;
     setsockopt(socket_, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(int));
 
-    logger_.Log("Create connection.");
-    logger_.Log("Ready to attempt queries.");
+    Logger::Log("[SERVER] Create connection.", SERVER);
+    Logger::Log("[SERVER] Ready to attempt queries.", SERVER);
 
-    struct sockaddr_in server_address;
-
-    server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = INADDR_ANY;
-    server_address.sin_port = htons(port);
+    struct sockaddr_in server_address = {
+            .sin_family = AF_INET,
+            .sin_addr.s_addr = INADDR_ANY,
+            .sin_port = htons(port)
+    };
 
     if (bind(socket_, (struct sockaddr *) &server_address, sizeof(server_address)) == -1) {
         close(socket_);
-        std::string status = (StringBuilder() << "Can't bind " << port << " port.").Get();
-        logger_.Log(status);
-        throw status;
+        std::string status = (StringBuilder() << "[SERVER] Can't bind " << port << " port.").Get();
+        Logger::Log(status, SERVER);
+        throw std::runtime_error(status);
     }
 
     listen(socket_, 5);
-    logger_.Log((StringBuilder() << "Binded on " << port << " port.").Get());
+    Logger::Log((StringBuilder() << "[SERVER] Binded on " << port << " port.").Get(), SERVER);
 }
 
 void Connection::Handle() {
@@ -42,33 +42,37 @@ void Connection::Handle() {
     int client_fd;
     socklen_t sin_len = sizeof(cli_addr);
 
-    pid_t pid = fork();
-    if (pid != 0) {
-        return;
-    }
+    fcntl(socket_, F_SETFL, fcntl(socket_, F_GETFL) | O_NONBLOCK);
 
-    while (true) {
-        client_fd = accept(socket_,
-                           (struct sockaddr *) &cli_addr,
-                           &sin_len);
-        logger_.Log("Got connection.");
+    while (Daemon::DaemonTools::IsOpen()) {
+      client_fd = accept(socket_,
+                         (struct sockaddr *) &cli_addr,
+                         &sin_len);
+      if (client_fd == -1)
+        continue;
 
-        if (client_fd == -1) {
-            logger_.Log("Can't accept.");
-            continue;
-        }
+      Logger::Log("[SERVER] Got connection.", SERVER);
 
-        std::string response_string = SimpleResponse().GetStr();
-        const char * response = response_string.c_str();
-        ssize_t total_cnt = 0, now_cnt;
-        while (total_cnt != strlen(response)) {
-            now_cnt = write(client_fd, response + total_cnt, strlen(response) - total_cnt);
-            total_cnt += now_cnt;
-        }
-        close(client_fd);
+      Query query(client_fd);
+
+      std::string response_string = SimpleResponse().GetStr();
+      const char * response = response_string.c_str();
+      ssize_t total_cnt = 0, now_cnt;
+      while (total_cnt != strlen(response)) {
+          now_cnt = write(client_fd, response + total_cnt, strlen(response) - total_cnt);
+          total_cnt += now_cnt;
+      }
+      close(client_fd);
     }
 }
 
 Connection::~Connection() {
-    close(socket_);
+  close(socket_);
+  Logger::Log("[SERVER] Socket closed.", SERVER);
+}
+
+Query::Query(int fd) {
+  char buffer[4096];
+  while (read(fd, buffer, sizeof(buffer)) == -1);
+  Logger::Log(buffer, SERVER);
 }

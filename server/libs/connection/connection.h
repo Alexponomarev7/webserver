@@ -16,22 +16,31 @@
 #include <arpa/inet.h>
 #include <err.h>
 #include <string>
+#include <unordered_map>
 
 #include <utils/logger/logger.h>
 #include <utils/string/string.h>
 #include <server/libs/common/types.h>
 #include <server/libs/connection/testlib.h>
 
+class Query {
+ public:
+  Query(int fd);
+ private:
+  std::unordered_map<std::string, std::string> data_;
+};
+
 class Connection {
-public:
-    Connection(int port);
+ public:
+  Connection() = default;
 
-    void Handle();
+  Connection(int port);
 
-    ~Connection();
-private:
-    int socket_;
-    Logger logger_;
+  void Handle();
+
+  ~Connection();
+ private:
+  int socket_;
 };
 
 
