@@ -13,6 +13,8 @@ class Response {
 public:
     Response() = default;
 
+    Response(const std::string& data);
+
     void SetVersion(std::string obj);
     std::string GetVersion() const;
 
@@ -29,7 +31,13 @@ public:
     std::string GetBody() const;
 
     std::string GetStr() const;
+
+    void SetPackage(std::string package);
+
 private:
+    bool is_package_{false};
+    std::string package_;
+
     std::string version_;
     std::string status_code_;
     std::string reason_phrase_;

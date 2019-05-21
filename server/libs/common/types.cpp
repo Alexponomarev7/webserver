@@ -5,6 +5,18 @@
 #include "types.h"
 
 // implements Response
+Response::Response(const std::string &data) {
+  is_package_ = false;
+
+  SetVersion("HTTP/1.1");
+  SetStatusCode("200");
+  SetReasonPhrase("OK");
+
+  SetHeadAttr("Content-Type", "text/html; charset=UTF-8");
+
+  SetBody(data);
+}
+
 void Response::SetVersion(std::string obj) {
     version_ = obj;
 }
@@ -48,6 +60,9 @@ std::string Response::GetBody() const {
 }
 
 std::string Response::GetStr() const {
+    if (is_package_)
+      return package_;
+
     StringBuilder builder = StringBuilder();
 
     builder << GetVersion() << " " << GetStatusCode() << " " << GetReasonPhrase() << "\n";
@@ -57,4 +72,9 @@ std::string Response::GetStr() const {
     builder << "\n";
     builder << GetBody();
     return builder.Get();
+}
+
+void Response::SetPackage(std::string package) {
+  is_package_ = true;
+  package_ = package;
 }

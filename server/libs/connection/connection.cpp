@@ -5,8 +5,9 @@
 #include <server/libs/daemon/daemontools.h>
 #include "connection.h"
 
-Connection::Connection(int port) {
+Connection::Connection(int port) : storage_(FileManager("/Users/lexolordan/webserver/cmake-build-debug/static")) {
     socket_ = socket(AF_INET, SOCK_STREAM, 0);
+    host_ = "127.0.0.1:" + std::to_string(port);
 
     if (socket_ < 0) {
         std::string status = "[SERVER] Can't open socket.";
@@ -53,15 +54,19 @@ void Connection::Handle() {
 
       Logger::Log("[SERVER] Got connection.", SERVER);
 
-      Query query(client_fd);
+      Query query = QueryHandler::RecieveFrom(client_fd);
 
-      std::string response_string = SimpleResponse().GetStr();
-      const char * response = response_string.c_str();
-      ssize_t total_cnt = 0, now_cnt;
-      while (total_cnt != strlen(response)) {
-          now_cnt = write(client_fd, response + total_cnt, strlen(response) - total_cnt);
-          total_cnt += now_cnt;
+      Response response;
+      if (query.GetHost() != host_) {
+        Logger::Log("[SERVER] Proxy redirection.", SERVER);
+        response = QueryHandler::GetProxy(query, GetStorage());
+      } else {
+        response = QueryHandler::GetResponse(query, GetStorage());
       }
+
+      Logger::Log("[SERVER] " + response.GetStr(), SERVER);
+      QueryHandler::SendTo(client_fd, response);
+
       close(client_fd);
     }
 }
@@ -69,10 +74,4 @@ void Connection::Handle() {
 Connection::~Connection() {
   close(socket_);
   Logger::Log("[SERVER] Socket closed.", SERVER);
-}
-
-Query::Query(int fd) {
-  char buffer[4096];
-  while (read(fd, buffer, sizeof(buffer)) == -1);
-  Logger::Log(buffer, SERVER);
 }

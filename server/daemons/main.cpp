@@ -9,7 +9,7 @@
 int main(int argc, char* argv[])
 {
     CmdParser cmd = CmdParser(argc, argv)
-      .AddOption("exec", {"start", "stop", "info"}, REQUIRED_ARG);
+      .AddOption("exec", {"start", "restart", "stop", "info"}, REQUIRED_ARG);
 
     try {
       if (cmd.Get("exec") == "start") {
@@ -17,6 +17,10 @@ int main(int argc, char* argv[])
         Daemon::DaemonTools::StartDaemon(cfg);
       } else if (cmd.Get("exec") == "stop") {
         Daemon::DaemonTools::StopDaemon();
+      } else if (cmd.Get("exec") == "restart") {
+        Daemon::DaemonTools::StopDaemon();
+        Daemon::Config cfg = Daemon::Config::LoadConfig("config.cfg");
+        Daemon::DaemonTools::StartDaemon(cfg);
       } else if (cmd.Get("exec") == "info") {
         UNREACHABLE();
       }

@@ -178,7 +178,7 @@ void DaemonTools::UpdatePidFile() {
   }
 }
 
-const std::string DaemonTools::PID_FILE = "/var/run/my_daemon.pid";
+const std::string DaemonTools::PID_FILE = "/var/run/web_server.pid";
 
 std::vector<std::thread> DaemonTools::threads_;
 
