@@ -57,6 +57,8 @@ void updateEvents(int efd, int fd, int events, bool modify) {
 void handleAccept(int efd, int fd) {
   int new_fd;
   read(fd, &new_fd, sizeof(new_fd));
+  if (new_fd < 0)
+    return;
   setNonBlock(new_fd);
   updateEvents(efd, new_fd, kReadEvent, false);
 }

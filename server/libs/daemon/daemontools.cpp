@@ -8,6 +8,7 @@
 namespace Daemon {
 
 void DaemonTools::Trampoline() {
+  Logger::Log("[DAEMON] Scheduler start.", DAEMON);
   auto connection = Connection(config_.Get("Port"));
   std::vector<int> pipes;
   for (size_t i = 0; i < config_.Get("ThreadCount"); ++i) {
@@ -18,6 +19,14 @@ void DaemonTools::Trampoline() {
   }
 
   connection.Accept(pipes);
+  Logger::Log("[DAEMON] Scheduler stop.", DAEMON);
+
+  for (int p : pipes) {
+    int closed = -1;
+    write(p, &closed, sizeof(closed));
+
+    close(p);
+  }
 }
 
 void DaemonTools::InitWorkThread() {
@@ -26,7 +35,7 @@ void DaemonTools::InitWorkThread() {
 
 void DaemonTools::DestroyWorkThread() {
   is_opened_ = false;
-  for (size_t i = 0; i < config_.Get("ThreadCount"); ++i) {
+  for (size_t i = 0; i < 1 + config_.Get("ThreadCount"); ++i) {
     threads_[i].join();
   }
 }
@@ -169,7 +178,7 @@ void DaemonTools::MonitorProc() {
     }
   }
 
-  Logger::Log("[MONITOR] Stop\n");
+  Logger::Log("[MONITOR] Stop\n", MONITOR);
   unlink(PID_FILE.c_str());
 }
 

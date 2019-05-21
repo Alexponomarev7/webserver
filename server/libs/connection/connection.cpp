@@ -46,6 +46,7 @@ void Connection::Accept(std::vector<int> fds) {
 
   size_t current = 0;
 
+  setNonBlock(socket_);
   while (Daemon::DaemonTools::IsOpen()) {
     client_fd = accept(socket_,
                        (struct sockaddr *) &cli_addr,
