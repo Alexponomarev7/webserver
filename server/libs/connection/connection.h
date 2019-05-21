@@ -29,7 +29,7 @@ class Query {
  public:
   Query() = default;
 
-  explicit Query(std::string s) {
+  explicit Query(std::string s, std::vector<char> data = {}) {
     char buffer1[1024], buffer2[1024];
 
     sscanf(s.c_str(), "%s %s", buffer1, buffer2);
@@ -50,27 +50,7 @@ class Query {
     data_["Content-Length"] = GetDataField(s, "Content-Length: ");
     data_["Origin"] = GetDataField(s, "Origin: ");
 
-    size_t count = 0;
-    bool flag = false;
-    std::string res;
-    for (size_t i = 0; i < s.size(); ++i) {
-      if (flag) {
-        res.push_back(s[i]);
-      }
-      if (s[i] == '\n' || s[i] == '\r') {
-        if (s[i] == '\n') {
-          count++;
-        }
-      } else {
-        count = 0;
-      }
-
-      if (count == 2) {
-        flag = true;
-      }
-    }
-
-    data_["data"] = res;
+    data_to_send_ = data;
   }
 
   void SetMethod(const std::string& method) {
@@ -105,9 +85,10 @@ class Query {
     return data_.at("package");
   }
 
-  std::string GetBasicPackage() const {
+  std::vector<char> GetBasicPackage() const {
     std::string result = data_.at("method") + " " + data_.at("path") +
         " HTTP/1.1\nHost: " + data_.at("host") + "\nConnection: close\n";
+
     if (data_.at("accept") != "") {
       result = result + "Accept: " + data_.at("accept") + "\n";
     }
@@ -141,12 +122,16 @@ class Query {
     }
 
     result = result + "\n";
-
-    if (data_.at("data") != "") {
-      result = result + data_.at("data");
+    std::vector<char> to_send;
+    for (auto c : result) {
+      to_send.push_back(c);
     }
 
-    return result;
+    for (auto c : data_to_send_) {
+      to_send.push_back(c);
+    }
+
+    return to_send;
   }
 
 private:
@@ -165,6 +150,7 @@ private:
     return result;
   }
 
+  std::vector<char> data_to_send_;
   std::unordered_map<std::string, std::string> data_;
 };
 
@@ -225,8 +211,8 @@ public:
 
     Logger::Log("[SERVER] Loading data in proxy.", SERVER);
 
-    Logger::Log(query.GetBasicPackage(), SERVER);
-    write(sock, query.GetBasicPackage().c_str(), query.GetBasicPackage().size());
+    Logger::Log(query.GetBasicPackage().data(), SERVER);
+    write(sock, query.GetBasicPackage().data(), query.GetBasicPackage().size());
 
     char buffer[4096];
     char* input = (char*)malloc(1);
@@ -252,13 +238,43 @@ public:
     return result;
   }
 
-  static Query RecieveFrom(int client_fd) {
-    static char buffer[4096];
+  static void ExtractData(const char buffer[], size_t readed, std::string &header, std::vector<char> &data) {
+    size_t count = 0;
+    bool flag = false;
 
-    while (read(client_fd, buffer, sizeof(buffer)) == -1);
+    for (size_t i = 0; i < readed; ++i) {
+      if (flag) {
+        data.push_back(buffer[i]);
+      } else {
+        header.push_back(buffer[i]);
+      }
+      if (buffer[i] == '\n' || buffer[i] == '\r') {
+        if (buffer[i] == '\n') {
+          count++;
+        }
+      } else {
+        count = 0;
+      }
+
+      if (count == 2) {
+        flag = true;
+      }
+    }
+  }
+
+  static Query RecieveFrom(int client_fd) {
+    static char buffer[8192];
+    size_t readed;
+    while ((readed = read(client_fd, buffer, sizeof(buffer))) == -1);
+
     Logger::Log(buffer, SERVER);
-    Query q;
-    return Query(std::string(buffer));
+
+    std::vector<char> data;
+    std::string header;
+
+    ExtractData(buffer, readed, header, data);
+
+    return Query(header, data);
   }
 
   static void SendTo(int client_fd, const Response &data = SimpleResponse()) {
