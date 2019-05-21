@@ -38,8 +38,17 @@ public:
 
     void SetPackage(std::string package);
 
+    bool JustFile() const {
+      return just_file_;
+    }
+
+    bool& JustFile() {
+      return just_file_;
+    }
+
 private:
     bool is_package_{false};
+    bool just_file_{false};
 
     std::string package_;
 

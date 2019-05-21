@@ -29,6 +29,50 @@ class Query {
  public:
   Query() = default;
 
+  explicit Query(std::string s) {
+    char buffer1[1024], buffer2[1024];
+
+    sscanf(s.c_str(), "%s %s", buffer1, buffer2);
+
+    data_["package"] = s;
+
+    data_["method"] = buffer1;
+    data_["path"] =  buffer2;
+
+    data_["host"] = GetDataField(s, "Host: ");
+
+    data_["Content-Type"] = GetDataField(s, "Content-Type: ");
+    data_["accept"] = GetDataField(s, "Accept: ");
+    data_["referer"] = GetDataField(s, "Referer: ");
+    data_["Accept-Encoding"] = GetDataField(s, "Accept-Encoding: ");
+    data_["Accept-Language"] = GetDataField(s, "Accept-Language: ");
+    data_["Cookie"] = GetDataField(s, "Cookie: ");
+    data_["Content-Length"] = GetDataField(s, "Content-Length: ");
+    data_["Origin"] = GetDataField(s, "Origin: ");
+
+    size_t count = 0;
+    bool flag = false;
+    std::string res;
+    for (size_t i = 0; i < s.size(); ++i) {
+      if (flag) {
+        res.push_back(s[i]);
+      }
+      if (s[i] == '\n' || s[i] == '\r') {
+        if (s[i] == '\n') {
+          count++;
+        }
+      } else {
+        count = 0;
+      }
+
+      if (count == 2) {
+        flag = true;
+      }
+    }
+
+    data_["data"] = res;
+  }
+
   void SetMethod(const std::string& method) {
     data_["method"] = method;
   }
@@ -53,7 +97,74 @@ class Query {
     return data_.at("host");
   }
 
- private:
+  void SetPackage(const std::string& package) {
+    data_["package"] = package;
+  }
+
+  std::string GetPackage() const {
+    return data_.at("package");
+  }
+
+  std::string GetBasicPackage() const {
+    std::string result = data_.at("method") + " " + data_.at("path") +
+        " HTTP/1.1\nHost: " + data_.at("host") + "\nConnection: close\n";
+    if (data_.at("accept") != "") {
+      result = result + "Accept: " + data_.at("accept") + "\n";
+    }
+
+    if (data_.at("referer") != "") {
+      result = result + "Referer: " + data_.at("referer") + "\n";
+    }
+
+    if (data_.at("Accept-Encoding") != "") {
+      result =result + "Accept-Encoding: " + data_.at("Accept-Encoding")  + "\n";
+    }
+
+    if (data_.at("Accept-Language") != "") {
+      result = result + "Accept-Language: " + data_.at("Accept-Language") + "\n";
+    }
+
+    if (data_.at("Cookie") != "") {
+      result = result + "Cookie: " + data_.at("Cookie") + "\n";
+    }
+
+    if (data_.at("Content-Type") != "") {
+      result = result + "Content-Type: " + data_.at("Content-Type") + "\n";
+    }
+
+    if (data_.at("Content-Length") != "") {
+      result = result + "Content-Length: " + data_.at("Content-Length") + "\n";
+    }
+
+    if (data_.at("Origin") != "") {
+      result = result + "Origin: " + data_.at("Origin") + "\n";
+    }
+
+    result = result + "\n";
+
+    if (data_.at("data") != "") {
+      result = result + data_.at("data");
+    }
+
+    return result;
+  }
+
+private:
+  std::string GetDataField(std::string src, std::string field) {
+    if (src.find(field) == -1) {
+      return "";
+    }
+
+    int pos = src.find(field);
+    pos += strlen(field.c_str());
+    std::string result;
+
+    for (size_t i = pos; src[i] != '\r' && src[i] != '\n'; i++) {
+      result += src[i];
+    }
+    return result;
+  }
+
   std::unordered_map<std::string, std::string> data_;
 };
 
@@ -91,7 +202,7 @@ public:
   }
 
   static Response GetProxy(const Query& query, FileManager& storage) {
-    auto finded = storage.Find(query.GetHost() + query.GetPath());
+    auto finded = storage.Find(query.GetPackage());
     if (finded.first) {
       Logger::Log("[CACHE] Got from cache.", SERVER);
       return finded.second;
@@ -103,6 +214,7 @@ public:
     };
     struct addrinfo *addr_result = NULL;
 
+    Logger::Log(query.GetHost().c_str(), SERVER);
     getaddrinfo(query.GetHost().c_str(), "http", &addr_hints, &addr_result);
     int sock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -111,14 +223,10 @@ public:
       return Response("Server problems.");
     }
 
-    char request[4096];
-    snprintf(request, sizeof(request),
-             "GET %s HTTP/1.1\n"
-             "Host: %s\n"
-             "Connection: close\n"
-             "\n",
-             query.GetPath().c_str(), query.GetHost().c_str());
-    write(sock, request, strnlen(request, sizeof(request)));
+    Logger::Log("[SERVER] Loading data in proxy.", SERVER);
+
+    Logger::Log(query.GetBasicPackage(), SERVER);
+    write(sock, query.GetBasicPackage().c_str(), query.GetBasicPackage().size());
 
     char buffer[4096];
     char* input = (char*)malloc(1);
@@ -131,9 +239,14 @@ public:
     close(sock);
 
     Response result;
-    result.SetPackage(input);
+    std::vector<char> file;
+    for (size_t i = 0; i < length_input; ++i) {
+      file.push_back(input[i]);
+    }
+    result.SetFile(file);
+    result.JustFile() = true;
 
-    storage.Save(query.GetHost() + query.GetPath(), result);
+    storage.Save(query.GetPackage(), result);
     Logger::Log("[CACHE] Cached.", SERVER);
 
     return result;
@@ -142,30 +255,22 @@ public:
   static Query RecieveFrom(int client_fd) {
     static char buffer[4096];
 
-    Query result;
-
     while (read(client_fd, buffer, sizeof(buffer)) == -1);
     Logger::Log(buffer, SERVER);
-
-    char type[50], path[50], prtcl[50], host[50], connect[50];
-
-    sscanf(buffer, "%s %s %s\n"
-                   "Host: %s\n"
-                   "Connection: %s", type, path, prtcl, host, connect);
-
-    result.SetMethod(std::string(type));
-    result.SetPath(std::string(path));
-    result.SetHost(std::string(host));
-
-    return result;
+    Query q;
+    return Query(std::string(buffer));
   }
 
   static void SendTo(int client_fd, const Response &data = SimpleResponse()) {
-    const char * response = data.GetStr().c_str();
-    ssize_t total_cnt = 0, now_cnt;
-    while (total_cnt != strlen(response)) {
-      now_cnt = write(client_fd, response + total_cnt, strlen(response) - total_cnt);
-      total_cnt += now_cnt;
+    const char *response;
+    ssize_t total_cnt, now_cnt;
+    if (!data.JustFile()) {
+      response = data.GetStr().c_str();
+      total_cnt = 0, now_cnt;
+      while (total_cnt != strlen(response)) {
+        now_cnt = write(client_fd, response + total_cnt, strlen(response) - total_cnt);
+        total_cnt += now_cnt;
+      }
     }
 
     auto file = data.GetFile();
