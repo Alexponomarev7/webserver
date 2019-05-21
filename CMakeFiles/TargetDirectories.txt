@@ -1,0 +1,3 @@
+/root/webserver/CMakeFiles/rebuild_cache.dir
+/root/webserver/CMakeFiles/wserver.dir
+/root/webserver/CMakeFiles/edit_cache.dir

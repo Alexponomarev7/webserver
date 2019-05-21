@@ -1,0 +1,27 @@
+21-05-2019 05:33:01: [DAEMON] Started
+
+21-05-2019 05:33:01: [SERVER] Create connection.
+21-05-2019 05:33:01: [SERVER] Ready to attempt queries.
+21-05-2019 05:33:01: [SERVER] Binded on 5000 port.
+21-05-2019 05:34:11: [DAEMON] Started
+
+21-05-2019 05:34:11: [SERVER] Create connection.
+21-05-2019 05:34:11: [SERVER] Ready to attempt queries.
+21-05-2019 05:34:11: [SERVER] Binded on 5000 port.
+21-05-2019 05:34:31: [DAEMON] Started
+
+21-05-2019 05:34:31: [SERVER] Create connection.
+21-05-2019 05:35:02: [DAEMON] Started
+
+21-05-2019 05:35:02: [SERVER] Create connection.
+21-05-2019 05:35:02: [SERVER] Ready to attempt queries.
+21-05-2019 05:36:48: [DAEMON] Started
+
+21-05-2019 05:36:48: [SERVER] Create connection.
+21-05-2019 05:36:48: [SERVER] Ready to attempt queries.
+21-05-2019 05:36:48: [SERVER] Binded on 5000 port.
+21-05-2019 05:36:48: [SERVER] Create connection.
+21-05-2019 05:37:27: [DAEMON] Started
+
+21-05-2019 05:37:27: [SERVER] Create connection.
+21-05-2019 05:37:27: [SERVER] Ready to attempt queries.

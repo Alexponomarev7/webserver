@@ -5,7 +5,7 @@
 #include <server/libs/daemon/daemontools.h>
 #include "connection.h"
 
-Connection::Connection(int port) : storage_(FileManager("/Users/lexolordan/webserver/cmake-build-debug/static")) {
+Connection::Connection(int port) : storage_(FileManager("/root/webserver/static")) {
     socket_ = socket(AF_INET, SOCK_STREAM, 0);
     host_ = "127.0.0.1:" + std::to_string(port);
 
@@ -21,11 +21,11 @@ Connection::Connection(int port) : storage_(FileManager("/Users/lexolordan/webse
     Logger::Log("[SERVER] Create connection.", SERVER);
     Logger::Log("[SERVER] Ready to attempt queries.", SERVER);
 
-    struct sockaddr_in server_address = {
-            .sin_family = AF_INET,
-            .sin_addr.s_addr = INADDR_ANY,
-            .sin_port = htons(port)
-    };
+    struct sockaddr_in server_address;
+    memset(&server_address, 0, sizeof(server_address));
+    server_address.sin_family = AF_INET;
+    server_address.sin_addr.s_addr = INADDR_ANY;
+    server_address.sin_port = htons(port);
 
     if (bind(socket_, (struct sockaddr *) &server_address, sizeof(server_address)) == -1) {
         close(socket_);

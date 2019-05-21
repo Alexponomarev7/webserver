@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <ctime>
+#include <mutex>
 
 enum LogType {
   DEFAULT = 0,

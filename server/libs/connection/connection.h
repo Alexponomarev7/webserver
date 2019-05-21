@@ -17,6 +17,7 @@
 #include <err.h>
 #include <string>
 #include <unordered_map>
+#include <algorithm>
 
 #include <utils/logger/logger.h>
 #include <utils/string/string.h>
@@ -97,10 +98,11 @@ public:
       return finded.second;
     }
 
-    struct addrinfo addr_hints = {
-        .ai_family = AF_INET,
-        .ai_socktype = SOCK_STREAM
-    };
+    struct addrinfo addr_hints;
+    memset(&addr_hints, 0, sizeof(addr_hints));
+    addr_hints.ai_socktype = SOCK_STREAM;
+    addr_hints.ai_family = AF_INET;
+
     struct addrinfo *addr_result = NULL;
 
     getaddrinfo(query.GetHost().c_str(), "http", &addr_hints, &addr_result);
@@ -129,7 +131,7 @@ public:
       length_input += readed;
     }
     close(sock);
-    
+
     Response result;
     result.SetPackage(input);
 
