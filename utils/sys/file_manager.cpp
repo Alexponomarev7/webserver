@@ -6,7 +6,7 @@
 
 FileManager::FileManager(const std::string &static_root) : static_root(static_root) {}
 
-std::string FileManager::Get(const std::string &path, int& status_code) const {
+std::vector<char> FileManager::Get(const std::string &path, int& status_code) const {
   static char buffer[4096];
 
   const std::string& res_path = static_root + path;
@@ -16,7 +16,7 @@ std::string FileManager::Get(const std::string &path, int& status_code) const {
     status_code = 404;
 
     Logger::Log(strerror(errno), SERVER);
-    return "Not such file.";
+    return {};
   }
 
   char* input = (char*)malloc(1);
@@ -31,5 +31,12 @@ std::string FileManager::Get(const std::string &path, int& status_code) const {
   fclose(file);
 
   status_code = 200;
-  return std::string(input);
+
+  std::vector<char> out;
+  for (size_t i = 0; i < length_input; ++i) {
+    out.push_back(input[i]);
+  }
+  free(input);
+
+  return out;
 }

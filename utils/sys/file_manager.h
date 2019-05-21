@@ -11,12 +11,35 @@
 #include <stdio.h>
 #include <utils/logger/logger.h>
 #include <server/libs/common/types.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <vector>
+
+class Data {
+public:
+  Data(char* data, size_t len) : data_(data), len_(len) {}
+
+  void WriteTo(int fd) {
+    for (size_t i = 0; i < len_; ++i) {
+      write(fd, &data_[i], sizeof(data_[i]));
+    }
+  }
+
+  ~Data() {
+    free(data_);
+  }
+private:
+  size_t len_;
+  char* data_;
+};
 
 class FileManager {
 public:
   FileManager(const std::string& static_root);
 
-  std::string Get(const std::string& path, int& status_code) const;
+  std::vector<char> Get(const std::string& path, int& status_code) const;
 
   void Save(const std::string& key, Response& resp) {
     auto lock = std::lock_guard(lock_);

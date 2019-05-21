@@ -8,6 +8,7 @@
 #include <iostream>
 #include <map>
 #include <utils/string/string.h>
+#include <vector>
 
 class Response {
 public:
@@ -30,13 +31,19 @@ public:
     void SetBody(std::string obj);
     std::string GetBody() const;
 
+    void SetFile(std::vector<char> obj);
+    std::vector<char> GetFile() const;
+
     std::string GetStr() const;
 
     void SetPackage(std::string package);
 
 private:
     bool is_package_{false};
+
     std::string package_;
+
+    std::vector<char> file_;
 
     std::string version_;
     std::string status_code_;

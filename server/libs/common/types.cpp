@@ -65,13 +65,22 @@ std::string Response::GetStr() const {
 
     StringBuilder builder = StringBuilder();
 
-    builder << GetVersion() << " " << GetStatusCode() << " " << GetReasonPhrase() << "\n";
+    builder << GetVersion() << " " << GetStatusCode() << " " << GetReasonPhrase() << "\r\n";
     for (auto item : head_) {
-        builder << item.first << ": " << item.second << "\n";
+        builder << item.first << ": " << item.second << "\r\n";
     }
-    builder << "\n";
+    builder << "\r\n";
     builder << GetBody();
+
     return builder.Get();
+}
+
+void Response::SetFile(std::vector<char> obj) {
+  file_ = obj;
+}
+
+std::vector<char> Response::GetFile() const {
+  return file_;
 }
 
 void Response::SetPackage(std::string package) {

@@ -44,9 +44,8 @@ void Connection::Accept(std::vector<int> fds) {
   int client_fd;
   socklen_t sin_len = sizeof(cli_addr);
 
-  make_non_blocking(socket_);
-
   size_t current = 0;
+
   while (Daemon::DaemonTools::IsOpen()) {
     client_fd = accept(socket_,
                        (struct sockaddr *) &cli_addr,
@@ -56,7 +55,6 @@ void Connection::Accept(std::vector<int> fds) {
 
     Logger::Log("[SERVER] Got connection.", SERVER);
 
-    make_non_blocking(client_fd);
     write(fds[current], &client_fd, sizeof(client_fd));
     current = (current + 1) % fds.size();
   }
@@ -64,23 +62,50 @@ void Connection::Accept(std::vector<int> fds) {
 }
 
 void Connection::Handle(int fd, Connection* connection) {
+  struct	kevent event;
+  struct	kevent tevent;
+
+  int ret, kq;
+  kq = kqueue();
+  if (kq	== -1) {
+    Logger::Log("[SERVER] 1 Error kqueue.", SERVER);
+    return;
+  }
+
+  setNonBlock(fd);
+  updateEvents(kq, fd, kReadEvent, false);
+
   int client_fd;
   while (Daemon::DaemonTools::IsOpen()) {
-    read(fd, &client_fd, sizeof(client_fd));
-    Query query = QueryHandler::RecieveFrom(client_fd);
+    kevent(kq, NULL, 0, &tevent,	1, NULL);
 
-    Response response;
-    if (query.GetHost() != connection->host_) {
-      Logger::Log("[SERVER] Proxy redirection.", SERVER);
-      response = QueryHandler::GetProxy(query, connection->GetStorage());
-    } else {
-      response = QueryHandler::GetResponse(query, connection->GetStorage());
+    int event_fd = (int)(intptr_t) tevent.udata;
+    int events = tevent.filter;
+
+    if (events != EVFILT_READ) {
+      continue;
     }
 
-    Logger::Log("[SERVER] " + response.GetStr(), SERVER);
-    QueryHandler::SendTo(client_fd, response);
+    if (event_fd == fd) {
+      handleAccept(kq, fd);
+    } else {
+      client_fd = event_fd;
 
-    close(client_fd);
+      Query query = QueryHandler::RecieveFrom(client_fd);
+
+      Response response;
+      if (query.GetHost() != connection->host_) {
+        Logger::Log("[SERVER] Proxy redirection.", SERVER);
+        response = QueryHandler::GetProxy(query, connection->GetStorage());
+      } else {
+        response = QueryHandler::GetResponse(query, connection->GetStorage());
+      }
+
+      Logger::Log("[SERVER] " + response.GetStr(), SERVER);
+      QueryHandler::SendTo(client_fd, response);
+
+      close(client_fd);
+    }
   }
 }
 

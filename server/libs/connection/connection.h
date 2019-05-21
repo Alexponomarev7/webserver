@@ -64,11 +64,11 @@ public:
       int status_code;
       Response response;
 
-      std::string response_str = storage.Get(query.GetPath(), status_code);
-
+      auto response_data = storage.Get(query.GetPath(), status_code);
       response.SetVersion("HTTP/1.1");
       response.SetHeadAttr("Content-Type", GetFileType(query.GetPath()));
-      response.SetBody(response_str);
+
+      response.SetFile(response_data);
 
       switch (status_code) {
         case 200:
@@ -167,6 +167,15 @@ public:
       now_cnt = write(client_fd, response + total_cnt, strlen(response) - total_cnt);
       total_cnt += now_cnt;
     }
+
+    auto file = data.GetFile();
+
+    response = file.data();
+    total_cnt = 0;
+    while (total_cnt != file.size()) {
+      now_cnt = write(client_fd, response + total_cnt, file.size() - total_cnt);
+      total_cnt += now_cnt;
+    }
   }
 
 private:
@@ -181,6 +190,10 @@ private:
 
     if (format == "ico") {
       return "image/x-icon; charset=UTF-8";
+    }
+
+    if (format == "jpg") {
+      return "image/png; charset=UTF-8";
     }
 
     return "text/html; charset=UTF-8";
