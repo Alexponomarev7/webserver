@@ -90,15 +90,18 @@ public:
     return Response("");
   }
 
-  static Response GetProxy(const Query& query, const FileManager& storage) {
+  static Response GetProxy(const Query& query, FileManager& storage) {
+    auto finded = storage.Find(query.GetHost() + query.GetPath());
+    if (finded.first) {
+      Logger::Log("[CACHE] Got from cache.", SERVER);
+      return finded.second;
+    }
+
     struct addrinfo addr_hints = {
         .ai_family = AF_INET,
         .ai_socktype = SOCK_STREAM
     };
     struct addrinfo *addr_result = NULL;
-
-    //Logger::Log(query.GetPath().c_str(), SERVER);
-    //Logger::Log(query.GetHost().c_str(), SERVER);
 
     getaddrinfo(query.GetHost().c_str(), "http", &addr_hints, &addr_result);
     int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -126,11 +129,12 @@ public:
       length_input += readed;
     }
     close(sock);
-
-    Logger::Log("SUCCESS", SERVER);
-
+    
     Response result;
     result.SetPackage(input);
+
+    storage.Save(query.GetHost() + query.GetPath(), result);
+    Logger::Log("[CACHE] Cached.", SERVER);
 
     return result;
   }
@@ -192,7 +196,7 @@ class Connection {
 
   void Handle();
 
-  const FileManager& GetStorage() const {
+  FileManager& GetStorage() {
     return storage_;
   }
 

@@ -60,7 +60,9 @@ CMakeFiles/wserver.dir/utils/sys/cmdparser.cpp.o
  /Users/lexolordan/webserver/utils/sys/cmdparser.cpp
  /Users/lexolordan/webserver/utils/sys/cmdparser.h
 CMakeFiles/wserver.dir/utils/sys/file_manager.cpp.o
+ .././server/libs/common/types.h
  .././utils/logger/logger.h
+ .././utils/string/string.h
  /Users/lexolordan/webserver/utils/sys/file_manager.cpp
  /Users/lexolordan/webserver/utils/sys/file_manager.h
 CMakeFiles/wserver.dir/utils/time.cpp.o

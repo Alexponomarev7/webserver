@@ -59,7 +59,9 @@ CMakeFiles/wserver.dir/utils/sys/cmdparser.cpp.o: .././utils/sys/helpers.h
 CMakeFiles/wserver.dir/utils/sys/cmdparser.cpp.o: ../utils/sys/cmdparser.cpp
 CMakeFiles/wserver.dir/utils/sys/cmdparser.cpp.o: ../utils/sys/cmdparser.h
 
+CMakeFiles/wserver.dir/utils/sys/file_manager.cpp.o: .././server/libs/common/types.h
 CMakeFiles/wserver.dir/utils/sys/file_manager.cpp.o: .././utils/logger/logger.h
+CMakeFiles/wserver.dir/utils/sys/file_manager.cpp.o: .././utils/string/string.h
 CMakeFiles/wserver.dir/utils/sys/file_manager.cpp.o: ../utils/sys/file_manager.cpp
 CMakeFiles/wserver.dir/utils/sys/file_manager.cpp.o: ../utils/sys/file_manager.h
 
