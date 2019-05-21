@@ -87,41 +87,41 @@ class Query {
 
   std::vector<char> GetBasicPackage() const {
     std::string result = data_.at("method") + " " + data_.at("path") +
-        " HTTP/1.1\nHost: " + data_.at("host") + "\nConnection: close\n";
+        " HTTP/1.1\r\nHost: " + data_.at("host") + "\r\nConnection: close\r\n";
 
     if (data_.at("accept") != "") {
-      result = result + "Accept: " + data_.at("accept") + "\n";
+      result = result + "Accept: " + data_.at("accept") + "\r\n";
     }
 
     if (data_.at("referer") != "") {
-      result = result + "Referer: " + data_.at("referer") + "\n";
+      result = result + "Referer: " + data_.at("referer") + "\r\n";
     }
 
     if (data_.at("Accept-Encoding") != "") {
-      result =result + "Accept-Encoding: " + data_.at("Accept-Encoding")  + "\n";
+      result =result + "Accept-Encoding: " + data_.at("Accept-Encoding")  + "\r\n";
     }
 
     if (data_.at("Accept-Language") != "") {
-      result = result + "Accept-Language: " + data_.at("Accept-Language") + "\n";
+      result = result + "Accept-Language: " + data_.at("Accept-Language") + "\r\n";
     }
 
     if (data_.at("Cookie") != "") {
-      result = result + "Cookie: " + data_.at("Cookie") + "\n";
+      result = result + "Cookie: " + data_.at("Cookie") + "\r\n";
     }
 
     if (data_.at("Content-Type") != "") {
-      result = result + "Content-Type: " + data_.at("Content-Type") + "\n";
+      result = result + "Content-Type: " + data_.at("Content-Type") + "\r\n";
     }
 
     if (data_.at("Content-Length") != "") {
-      result = result + "Content-Length: " + data_.at("Content-Length") + "\n";
+      result = result + "Content-Length: " + data_.at("Content-Length") + "\r\n";
     }
 
     if (data_.at("Origin") != "") {
-      result = result + "Origin: " + data_.at("Origin") + "\n";
+      result = result + "Origin: " + data_.at("Origin") + "\r\n";
     }
 
-    result = result + "\n";
+    result = result + "\r\n";
     std::vector<char> to_send;
     for (auto c : result) {
       to_send.push_back(c);
@@ -206,7 +206,7 @@ public:
 
     if (0 != connect(sock, addr_result->ai_addr, addr_result->ai_addrlen)) {
       Logger::Log(strerror(errno));
-      return Response("Server problems.");
+      return Response("[SERVER] Server problems.");
     }
 
     Logger::Log("[SERVER] Loading data in proxy.", SERVER);
@@ -216,7 +216,7 @@ public:
 
     char buffer[4096];
     char* input = (char*)malloc(1);
-    size_t length_input = 0, readed;
+    ssize_t length_input = 0, readed;
     while ((readed = read(sock, buffer, sizeof(buffer))) > 0) {
       input = (char*)realloc(input, length_input + readed + 1);
       memcpy(input + length_input, buffer, readed);
@@ -263,16 +263,29 @@ public:
   }
 
   static Query RecieveFrom(int client_fd) {
-    static char buffer[8192];
-    size_t readed;
-    while ((readed = read(client_fd, buffer, sizeof(buffer))) == -1);
-
-    Logger::Log(buffer, SERVER);
+    char buffer[4096];
+    int readed = 0;
+    readed = read(client_fd, buffer, sizeof(buffer));
 
     std::vector<char> data;
     std::string header;
 
     ExtractData(buffer, readed, header, data);
+
+    if (header.find("boundary=----WebKitFormBoundary") != -1) {
+      char* input = (char*)malloc(1);
+      ssize_t length_input = 0, readed;
+      while ((readed = read(client_fd, buffer, sizeof(buffer))) > 0) {
+        input = (char*)realloc(input, length_input + readed + 1);
+        memcpy(input + length_input, buffer, readed);
+        length_input += readed;
+      }
+      for (int i = 0; i < length_input; ++i) {
+        data.push_back(input[i]);
+      }
+
+      free(input);
+    }
 
     return Query(header, data);
   }
