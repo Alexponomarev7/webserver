@@ -135,6 +135,9 @@
 		<Unit filename="/Users/lexolordan/webserver/utils/sys/cmdparser.h">
 			<Option target="wserver"/>
 		</Unit>
+		<Unit filename="/Users/lexolordan/webserver/utils/sys/epoll_api.h">
+			<Option target="wserver"/>
+		</Unit>
 		<Unit filename="/Users/lexolordan/webserver/utils/sys/file_manager.cpp">
 			<Option target="wserver"/>
 		</Unit>

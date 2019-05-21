@@ -24,6 +24,7 @@ CMakeFiles/wserver.dir/server/libs/connection/connection.cpp.o: .././server/libs
 CMakeFiles/wserver.dir/server/libs/connection/connection.cpp.o: .././server/libs/daemon/daemontools.h
 CMakeFiles/wserver.dir/server/libs/connection/connection.cpp.o: .././utils/logger/logger.h
 CMakeFiles/wserver.dir/server/libs/connection/connection.cpp.o: .././utils/string/string.h
+CMakeFiles/wserver.dir/server/libs/connection/connection.cpp.o: .././utils/sys/epoll_api.h
 CMakeFiles/wserver.dir/server/libs/connection/connection.cpp.o: .././utils/sys/file_manager.h
 CMakeFiles/wserver.dir/server/libs/connection/connection.cpp.o: .././utils/sys/helpers.h
 CMakeFiles/wserver.dir/server/libs/connection/connection.cpp.o: ../server/libs/connection/connection.cpp

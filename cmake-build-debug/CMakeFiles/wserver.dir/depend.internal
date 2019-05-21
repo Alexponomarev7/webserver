@@ -25,6 +25,7 @@ CMakeFiles/wserver.dir/server/libs/connection/connection.cpp.o
  .././server/libs/daemon/daemontools.h
  .././utils/logger/logger.h
  .././utils/string/string.h
+ .././utils/sys/epoll_api.h
  .././utils/sys/file_manager.h
  .././utils/sys/helpers.h
  /Users/lexolordan/webserver/server/libs/connection/connection.cpp

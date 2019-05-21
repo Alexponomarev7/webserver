@@ -9,13 +9,19 @@ namespace Daemon {
 
 void DaemonTools::Trampoline() {
   auto connection = Connection(config_.Get("Port"));
-  connection.Handle();
+  std::vector<int> pipes;
+  for (size_t i = 0; i < config_.Get("ThreadCount"); ++i) {
+    int fds[2];
+    pipe(fds);
+    threads_.emplace_back(Connection::Handle, fds[0], &connection);
+    pipes.push_back(fds[1]);
+  }
+
+  connection.Accept(pipes);
 }
 
 void DaemonTools::InitWorkThread() {
-  for (size_t i = 0; i < config_.Get("ThreadCount"); ++i) {
-    threads_.emplace_back(Trampoline);
-  }
+  threads_.emplace_back(Trampoline);
 }
 
 void DaemonTools::DestroyWorkThread() {

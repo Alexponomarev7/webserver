@@ -129,7 +129,7 @@ public:
       length_input += readed;
     }
     close(sock);
-    
+
     Response result;
     result.SetPackage(input);
 
@@ -194,7 +194,9 @@ class Connection {
 
   Connection(int port);
 
-  void Handle();
+  static void Handle(int fd, Connection* conn);
+
+  void Accept(std::vector<int> fds);
 
   FileManager& GetStorage() {
     return storage_;

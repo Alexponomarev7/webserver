@@ -17,6 +17,6 @@ set(LIBRARY
 set(UTILS
         utils/logger/logger.cpp
         utils/time.cpp
-        utils/string/string.cpp server/libs/daemon/config.cpp server/libs/daemon/config.h utils/sys/cmdparser.cpp utils/sys/cmdparser.h utils/sys/helpers.h utils/sys/file_manager.cpp utils/sys/file_manager.h)
+        utils/string/string.cpp server/libs/daemon/config.cpp server/libs/daemon/config.h utils/sys/cmdparser.cpp utils/sys/cmdparser.h utils/sys/helpers.h utils/sys/file_manager.cpp utils/sys/file_manager.h utils/sys/epoll_api.h)
 
 add_executable(wserver server/daemons/main.cpp ${LIBRARY} ${UTILS})

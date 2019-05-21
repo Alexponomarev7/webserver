@@ -3,6 +3,7 @@
 //
 
 #include <server/libs/daemon/daemontools.h>
+#include <utils/sys/epoll_api.h>
 #include "connection.h"
 
 Connection::Connection(int port) : storage_(FileManager("/Users/lexolordan/webserver/cmake-build-debug/static")) {
@@ -38,37 +39,49 @@ Connection::Connection(int port) : storage_(FileManager("/Users/lexolordan/webse
     Logger::Log((StringBuilder() << "[SERVER] Binded on " << port << " port.").Get(), SERVER);
 }
 
-void Connection::Handle() {
-    struct sockaddr_in cli_addr;
-    int client_fd;
-    socklen_t sin_len = sizeof(cli_addr);
+void Connection::Accept(std::vector<int> fds) {
+  struct sockaddr_in cli_addr;
+  int client_fd;
+  socklen_t sin_len = sizeof(cli_addr);
 
-    fcntl(socket_, F_SETFL, fcntl(socket_, F_GETFL) | O_NONBLOCK);
+  make_non_blocking(socket_);
 
-    while (Daemon::DaemonTools::IsOpen()) {
-      client_fd = accept(socket_,
-                         (struct sockaddr *) &cli_addr,
-                         &sin_len);
-      if (client_fd == -1)
-        continue;
+  size_t current = 0;
+  while (Daemon::DaemonTools::IsOpen()) {
+    client_fd = accept(socket_,
+                       (struct sockaddr *) &cli_addr,
+                       &sin_len);
+    if (client_fd == -1)
+      continue;
 
-      Logger::Log("[SERVER] Got connection.", SERVER);
+    Logger::Log("[SERVER] Got connection.", SERVER);
 
-      Query query = QueryHandler::RecieveFrom(client_fd);
+    make_non_blocking(client_fd);
+    write(fds[current], &client_fd, sizeof(client_fd));
+    current = (current + 1) % fds.size();
+  }
 
-      Response response;
-      if (query.GetHost() != host_) {
-        Logger::Log("[SERVER] Proxy redirection.", SERVER);
-        response = QueryHandler::GetProxy(query, GetStorage());
-      } else {
-        response = QueryHandler::GetResponse(query, GetStorage());
-      }
+}
 
-      Logger::Log("[SERVER] " + response.GetStr(), SERVER);
-      QueryHandler::SendTo(client_fd, response);
+void Connection::Handle(int fd, Connection* connection) {
+  int client_fd;
+  while (Daemon::DaemonTools::IsOpen()) {
+    read(fd, &client_fd, sizeof(client_fd));
+    Query query = QueryHandler::RecieveFrom(client_fd);
 
-      close(client_fd);
+    Response response;
+    if (query.GetHost() != connection->host_) {
+      Logger::Log("[SERVER] Proxy redirection.", SERVER);
+      response = QueryHandler::GetProxy(query, connection->GetStorage());
+    } else {
+      response = QueryHandler::GetResponse(query, connection->GetStorage());
     }
+
+    Logger::Log("[SERVER] " + response.GetStr(), SERVER);
+    QueryHandler::SendTo(client_fd, response);
+
+    close(client_fd);
+  }
 }
 
 Connection::~Connection() {
