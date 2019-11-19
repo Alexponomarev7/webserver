@@ -85,10 +85,10 @@ int DaemonTools::WorkProc(int FD_LIMIT = 1024) {
 
   sigemptyset(&sigact.sa_mask);
 
-  sigaction(SIGFPE, &sigact, 0); // ошибка FPU
-  sigaction(SIGILL, &sigact, 0); // ошибочная инструкция
-  sigaction(SIGSEGV, &sigact, 0); // ошибка доступа к памяти
-  sigaction(SIGBUS, &sigact, 0); // ошибка шины, при обращении к физической памяти
+  sigaction(SIGFPE, &sigact, 0); // FPU error
+  sigaction(SIGILL, &sigact, 0); // instruction error
+  sigaction(SIGSEGV, &sigact, 0); // error access to memory
+  sigaction(SIGBUS, &sigact, 0); // physical memory error access
 
   sigemptyset(&sigset);
 
@@ -99,32 +99,32 @@ int DaemonTools::WorkProc(int FD_LIMIT = 1024) {
 
   sigprocmask(SIG_BLOCK, &sigset, NULL);
 
-  // Установим максимальное кол-во дискрипторов которое можно открыть
+  // Set max FD_Limit
   Config::SetFdLimit(FD_LIMIT);
 
-  // запишем в лог, что наш демон стартовал
+  // Log about daemon starting
   Logger::Log("[DAEMON] Started\n", DAEMON);
 
   DaemonTools::InitWorkThread();
 
   while (true) {
-    // ждем указанных сообщений
+    // wait for selected messages
     sigwait(&sigset, &signo);
 
-    // если то сообщение обновления конфига
+    // Need to reload config
     if (signo == SIGUSR1) {
-      // обновим конфиг
+      // reload config
       // ReloadConfig();
-    } else { // если какой-либо другой сигнал, то выйдим из цикла
+    } else { // аny other signal stop
       break;
     }
   }
-  // остановим все рабочеи потоки и корректно закроем всё что надо
+  // stop all working threads
   DaemonTools::DestroyWorkThread();
 
   Logger::Log("[DAEMON] Stopped\n", DAEMON);
 
-  // вернем код не требующим перезапуска
+  // Need to terminate
   return CHILD_NEED_TERMINATE;
 }
 

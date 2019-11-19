@@ -16,6 +16,7 @@ void Logger::Log(std::string message, LogType type) {
     mutex_.lock();
     FILE* f;
 
+    // need fix
     f = fopen("/Users/lexolordan/log.txt", "a+");
 
     fprintf(f, "%s: %s\n", Time::AdvancedFormat().c_str(), message.c_str());

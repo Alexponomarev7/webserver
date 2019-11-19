@@ -68,19 +68,18 @@ void handleRead(int efd, int fd) {
   int n = 0;
   while ((n=::read(fd, buf, sizeof buf)) > 0) {
     printf("read %d bytes\n", n);
-    int r = ::write(fd, buf, n); //写出读取的数据
-    //实际应用中，写出数据可能会返回EAGAIN，此时应当监听可写事件，当可写时再把数据写出
+    int r = ::write(fd, buf, n);
+
     exit_if(r<=0, "write error");
   }
   if (n<0 && (errno == EAGAIN || errno == EWOULDBLOCK))
     return;
-  exit_if(n<0, "read error"); //实际应用中，n<0应当检查各类错误，如EINTR
+  exit_if(n<0, "read error");
   printf("fd %d closed\n", fd);
   close(fd);
 }
 
 void handleWrite(int efd, int fd) {
-  //实际应用应当实现可写时写出数据，无数据可写才关闭可写事件
   updateEvents(efd, fd, kReadEvent, true);
 }
 
