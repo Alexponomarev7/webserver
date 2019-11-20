@@ -6,17 +6,17 @@ Langs: C++, C, CMake
 
 ## Описание
 
-Прокси-сервер написан и протестирован под Mac OS HighSiera. Реализован реальный демон, который управляется средставами команд **sudo ./wserver start** и **sudo ./wserver stop**. Запуск под **sudo** обязателен. В то время как процесс, который будет исполнять код сервера, не имеет прав **sudo**.
+Proxy-server is implemented in C++ and tested under Mac OS HighSiera. I made daemon, which is controlled by current commands **sudo ./wserver start** and **sudo ./wserver stop**. Running under **sudo** is required. Running main server process hasn't root permissions.
 
-Реализованы уровни логгирования:
+Realized current levels of logging:
 * SERVER *1*
 * DAEMON *2*
 * MONITOR *4*
 
-В конфиге **config.cfg** можно прописать нужный уровень маской, интересующих блоков логгирования.
+In config **config.cfg** you can set up desired logging level.
 
-## Структура
+## Structure
 
-Архитектура сервера представляется тремя блоками: Server, Daemon, Monitor. Монитор отвечает за ход работы Daemon и Server, соответственно. Он отслеживает работу, обрабатывает и завершает сигналы, сохраняет значение своего процесса в **/var/run/web_server.pid**. Так же поддерживается обновление конфига через Monitor запущенного Daemon'a.
+The server's architecture consists three parts: Server, Daemon, Monitor. Monitor looks after Daemon and Server. It tracks all signals, saves it's pid in **/var/run/web_server.pid**. Also it supports config reloading of working Daemon service.
 
-Поддерживается многопоточность. Daemon запускает ThreadWorkload и следит за выполнением самого сервера, при остановке завершает все потоки.
+Support multithreading. Daemon runs ThreadWorkload and tracks the execution, at the end it stops all threads.
